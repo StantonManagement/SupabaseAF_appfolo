@@ -1,7 +1,9 @@
-from .appfolio import get_bill_details
-from .supabase_client import update_bill_details
+from .appfolio import get_appfolio_details
+from .supabase_client import update_supabase_details
 
 
-def sync_bill_details():
-    data = get_bill_details()
-    update_bill_details(data)
+def sync_details(dataset: str):
+    data = get_appfolio_details(dataset)
+    update_supabase_details(dataset, data)
+
+    return data
