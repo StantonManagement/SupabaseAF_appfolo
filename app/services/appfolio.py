@@ -32,4 +32,4 @@ def get_appfolio_details(dataset: str):
     response.raise_for_status()
 
     data = response.json()
-    return data["results"][0]
+    return data["results"]
