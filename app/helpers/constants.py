@@ -3,9 +3,10 @@ DETAILS = {
     "unit_vacancy": "AF_UnitVacancyDetail",
     "rental_applications": "AF_RentalApplications",
     # ! others
-    "propery_group_directory": "AF_PropertyGroupDirectory",
-    # "portfolios": "AF_Portfolios", --> Not found
-    # "tenants": "AF_Tenants",
+    "property_group_directory": "AF_PropertyGroupDirectory",
+    "tenant_diretory": "AF_TenantDirectory",
+    # "tenant_tickler": "AF_TenantTickler",
+    # "tenant_vehicle_info": "AF_TenantVehicleInfo",
     # "leases": "AF_Leases",
     "aged_payables_summary": "AF_AgedPayablesSummary",
     # "aged_receivable_detail": "AF_AgedReceivableDetail",
@@ -24,12 +25,11 @@ DETAILS = {
     # "receivables_activity": "AF_ReceivablesActivity",
     # "rent_roll": "AF_RentRoll",
     # "rent_roll_itemized": "AF_RentRollItemized",
-    # "tenant_tickler": "AF_TenantTickler",
-    # "tenant_vehicle_info": "AF_TenantVehicleInfo",
     # "trust_account_balance": "AF_TrustAccountBalance",
     # "unit_turn_detail": "AF_UnitTurnDetail",
     # "vendor_directory": "AF_VendorDirectory",
     # "work_order": "AF_WorkOrder",
+    # "portfolios": "AF_Portfolios", --> Not found
 }
 
 

@@ -15,16 +15,16 @@ supabase: Client = create_client(url, key)
 
 
 def update_supabase_details(dataset: str, appfolio_results):
-    # print(appfolio_results)
+    print(appfolio_results)
     # print(DETAILS[dataset])
+
+    # for record in appfolio_results:
+    #     cleaned_record = clean_record(record)
+    #     state = supabase.table(DETAILS[dataset]).upsert(cleaned_record).execute()
+    #     print(state)
+    #     print("=" * 60)
+
+    print(len(appfolio_results))
 
     # fetched_dta = supabase.table(DETAILS[dataset]).select("*").execute()
     # print(fetched_dta)
-
-    for record in appfolio_results:
-        cleaned_record = clean_record(record)
-        state = supabase.table(DETAILS[dataset]).upsert(cleaned_record).execute()
-        print(state)
-        print("=" * 60)
-
-    print(len(appfolio_results))
