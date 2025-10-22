@@ -24,6 +24,6 @@ def update_supabase_details(dataset: str, data):
     for record in data:
         cleaned_record = clean_record(record)
         print(json.dumps(cleaned_record, indent=4))
-        state = supabase.table(DETAILS[dataset]).upsert(cleaned_record).execute()
-        print(state)
+        # state = supabase.table(DETAILS[dataset]).upsert(cleaned_record).execute()
+        # print(state)
         print("=" * 60)
