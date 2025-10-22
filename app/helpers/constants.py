@@ -8,8 +8,8 @@ DETAILS = {
     "bill_detail": "AF_BillDetail",
     "tenant_directory": "AF_TenantDirectory",
     "tenant_tickler": "AF_TenantTickler",
+    "tenant_vehicle_info": "AF_TenantVehicleInfo",
     # ! Not Yet Done
-    # "tenant_vehicle_info": "AF_TenantVehicleInfo",
     # "tenant_debt_collections_status": "AF_TenantDebtCollectionsStatus",
     # "delinquency": "AF_Delinquency",
     # "gross_potential_rent_enhanced": "AF_GrossPotentialRentEnhanced",
