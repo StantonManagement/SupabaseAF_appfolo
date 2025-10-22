@@ -1,8 +1,10 @@
 from supabase import create_client, Client
 import os
+import json
 
 from dotenv import load_dotenv
 from ..helpers.constants import DETAILS
+from ..helpers.utils import clean_record
 
 load_dotenv()
 
@@ -13,8 +15,15 @@ supabase: Client = create_client(url, key)
 
 
 def update_supabase_details(dataset: str, data):
-    print("THIS IS THE DATA FROM SUPABASE")
-    print(data)
-    print(DETAILS[dataset])
-    # for record in data:
-    #     supabase.table(DETAILS[dataset]).upsert(record).execute()
+    # print(data)
+    # print(DETAILS[dataset])
+
+    # fetched_dta = supabase.table(DETAILS[dataset]).select("*").execute()
+    # print(fetched_dta)
+
+    for record in data:
+        cleaned_record = clean_record(record)
+        print(json.dumps(cleaned_record, indent=4))
+        state = supabase.table(DETAILS[dataset]).upsert(cleaned_record).execute()
+        print(state)
+        print("=" * 60)
