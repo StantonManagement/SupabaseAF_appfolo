@@ -1,10 +1,10 @@
 DETAILS = {
     # ! important
     "unit_vacancy": "AF_UnitVacancyDetail",
-    # "rental_applications": "AF_RentalApplications",
+    "rental_applications": "AF_RentalApplications",
     # ! others
-    # "portfolios": "AF_Portfolios",
-    # "buildings": "AF_Buildings",
+    "propery_group_directory": "AF_PropertyGroupDirectory",
+    # "portfolios": "AF_Portfolios", --> Not found
     # "tenants": "AF_Tenants",
     # "leases": "AF_Leases",
     "aged_payables_summary": "AF_AgedPayablesSummary",

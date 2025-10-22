@@ -25,5 +25,6 @@ def update_supabase_details(dataset: str, appfolio_results):
         cleaned_record = clean_record(record)
         state = supabase.table(DETAILS[dataset]).upsert(cleaned_record).execute()
         print(state)
+        print("=" * 60)
 
     print(len(appfolio_results))
