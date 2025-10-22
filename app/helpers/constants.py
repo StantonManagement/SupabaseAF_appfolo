@@ -9,10 +9,10 @@ DETAILS = {
     "tenant_directory": "AF_TenantDirectory",
     "tenant_tickler": "AF_TenantTickler",
     "tenant_vehicle_info": "AF_TenantVehicleInfo",
+    "tenant_debt_collections_status": "AF_TenantDebtCollectionsStatus",
+    "delinquency": "AF_Delinquency",
+    "gross_potential_rent_enhanced": "AF_GrossPotentialRentEnhanced",
     # ! Not Yet Done
-    # "tenant_debt_collections_status": "AF_TenantDebtCollectionsStatus",
-    # "delinquency": "AF_Delinquency",
-    # "gross_potential_rent_enhanced": "AF_GrossPotentialRentEnhanced",
     # "guest_cards": "AF_GuestCards",
     # "lease_expiration_detail_by_month": "AF_LeaseExpirationDetailByMonth",
     # "owner_directory": "AF_OwnerDirectory",
