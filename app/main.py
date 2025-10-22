@@ -4,10 +4,6 @@ from pydantic import BaseModel
 from app.services.sync import sync_details
 
 
-# TODO: add unit_vacancy to DEV
-# TODO: add to bill_detail to MAIN
-# TODO: test aged_payables_summary to DEV
-
 app = FastAPI()
 
 

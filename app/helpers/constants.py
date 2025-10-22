@@ -1,9 +1,7 @@
 DETAILS = {
     # ! important
     "unit_vacancy": "AF_UnitVacancyDetail",
-    # "vacancy_reports": "AF_VacancyReports",
-    # "units": "AF_Units",
-    "rental_applications": "AF_RentalApplications",
+    # "rental_applications": "AF_RentalApplications",
     # ! others
     # "portfolios": "AF_Portfolios",
     # "buildings": "AF_Buildings",

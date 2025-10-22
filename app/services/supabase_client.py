@@ -14,16 +14,16 @@ key = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
 supabase: Client = create_client(url, key)
 
 
-def update_supabase_details(dataset: str, data):
-    # print(data)
+def update_supabase_details(dataset: str, appfolio_results):
+    # print(appfolio_results)
     # print(DETAILS[dataset])
 
     # fetched_dta = supabase.table(DETAILS[dataset]).select("*").execute()
     # print(fetched_dta)
 
-    for record in data:
+    for record in appfolio_results:
         cleaned_record = clean_record(record)
-        print(json.dumps(cleaned_record, indent=4))
-        # state = supabase.table(DETAILS[dataset]).upsert(cleaned_record).execute()
-        # print(state)
-        print("=" * 60)
+        state = supabase.table(DETAILS[dataset]).upsert(cleaned_record).execute()
+        print(state)
+
+    print(len(appfolio_results))
