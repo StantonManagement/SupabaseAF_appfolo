@@ -22,17 +22,13 @@ DETAILS = {
     "tenant_debt_collections_status": "AF_TenantDebtCollectionsStatus",
     "delinquency": "AF_Delinquency",
     "gross_potential_rent_enhanced": "AF_GrossPotentialRentEnhanced",
-    # ! Not Yet Done
-    # "lease_expiration_detail_by_month": "AF_LeaseExpirationDetailByMonth",
-    # "owner_directory": "AF_OwnerDirectory",
-    # "purchase_order": "AF_PurchaseOrder",
-    # "receivables_activity": "AF_ReceivablesActivity",
-    # "rent_roll": "AF_RentRoll",
-    # "rent_roll_itemized": "AF_RentRollItemized",
-    # "trust_account_balance": "AF_TrustAccountBalance",
-    # "unit_turn_detail": "AF_UnitTurnDetail",
-    # "vendor_directory": "AF_VendorDirectory",
-    # "work_order": "AF_WorkOrder",
+    "purchase_order": "AF_PurchaseOrder",
+    "rent_roll": "AF_RentRoll",
+    "rent_roll_itemized": "AF_RentRollItemized",
+    "rent_roll_commercial": "AF_RentRollCommercial",
+    "unit_turn_detail": "AF_UnitTurnDetail",
+    "work_order": "AF_WorkOrder",
+    "work_order_labor_summary": "AF_WorkOrderLaborSummary",
     # ! not found in v2
     # "aged_receivable_detail": "AF_AgedReceivableDetail",
     # "portfolios": "AF_Portfolios",
@@ -41,6 +37,10 @@ DETAILS = {
     # "chart_of_accounts": "AF_ChartOfAccounts",
     # "deposit_register": "AF_DepositRegister",
     # "general_ledger": "AF_GeneralLedger",
+    # "owner_directory": "AF_OwnerDirectory",
+    # "receivables_activity": "AF_ReceivablesActivity",
+    # "trust_account_balance": "AF_TrustAccountBalance",
+    # "vendor_directory": "AF_VendorDirectory",
 }
 
 
