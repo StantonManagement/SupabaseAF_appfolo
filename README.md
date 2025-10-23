@@ -70,3 +70,30 @@ The service fetches the specified dataset, cleans each record, and upserts it in
 - `docs/appfolio-api-knowledge.md` – canonical guide for authentication nuances, rate limits, and endpoint filters.
 - `docs/developer-advice-doc.md` – practical playbook for choosing between Stack and Reports endpoints with code snippets.
 - `docs/TABLES.md` – Supabase SQL definitions for provisioned tables.
+
+## Deploy to Railway
+Use one public API service and one worker service per dataset (separate schedules and logs).
+
+1) Create Environment Group
+- Add `APPFOLIO_CLIENT_ID`, `APPFOLIO_CLIENT_SECRET`, `V1_BASE_URL`, `V2_BASE_URL`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` (optional: `SUPABASE_ANON_KEY`, `DATABASE_URL`). Attach to all services.
+
+2) API Service (single endpoint)
+- New Service → GitHub Repository (this repo). Build uses Python Nixpacks.
+- Start command: `uvicorn app.main:app --host 0.0.0.0 --port ${PORT}`.
+- Verify `GET /` and `POST /sync_details` at the service URL.
+
+3) Worker Services (per dataset)
+- Create a new service from the same repo (no port needed).
+- Add a Cron for each dataset with the command:
+  - `python -m app.job_runner --dataset unit_vacancy`
+  - `python -m app.job_runner --dataset rental_applications`
+- Example schedules: `*/30 * * * *` (every 30 min), `0 * * * *` (hourly). Stagger to respect AppFolio limits.
+
+4) Logs, Retries, Non-overlap
+- Each worker has isolated logs. The runner emits JSON: `{event,dataset,run_id,status,count,duration_ms}`.
+- Railway Cron marks failures on non‑zero exit; enable retries/backoff in the Cron settings if available.
+- If jobs may run long, keep one dataset per worker; optionally add a lock using a Supabase table.
+
+Manual run examples
+- From a worker service “Run command”: `python -m app.job_runner --dataset unit_vacancy`.
+- Multiple datasets in one run: `python -m app.job_runner --dataset unit_vacancy,rental_applications`.
