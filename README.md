@@ -40,7 +40,7 @@ uvicorn app.main:app --reload
 
 ## API Reference
 - `GET /` → simple health payload `{"Hello": "World"}`.
-- `POST /sync_details` accepts `{"dataset": <DETAILS key>}` and returns `{"status": [...]}`, where the list echoes the records fetched from AppFolio after Supabase upserts.
+- `POST /sync_details` accepts `{"dataset": <DETAILS key>}` and returns `{"success": int, "failed": int, "total": int}`, providing counts of successful and failed record upserts.
 
 Sample request:
 ```bash
@@ -48,6 +48,16 @@ curl -X POST http://127.0.0.1:8000/sync_details \
   -H 'Content-Type: application/json' \
   -d '{"dataset": "guest_card_inquiries"}'
 ```
+
+Sample response:
+```json
+{
+    "success": 150,
+    "failed": 2,
+    "total": 152
+}
+```
+
 The service fetches the specified dataset, cleans each record, and upserts it into the Supabase table referenced in `DETAILS`. For v1-only resources (`aged_payables_summary`, `bill_detail`), the client automatically switches to the Stack API.
 
 ## Supported Dataset Keys
@@ -58,7 +68,12 @@ The service fetches the specified dataset, cleans each record, and upserts it in
 - `sandbox/appfolio_test.py` exercises a wide set of Reports API endpoints with credential validation and rate-limit protection.
 - `sandbox/simple_supabase_test.py` and `sandbox/final_supabase_test.py` confirm Supabase REST and Postgres connectivity; the latter prints a corrected `.env` template if connection strings are malformed.
 - `sandbox/postgres_test.py` demonstrates direct Postgres access; run only with trusted networks.
-- Keep an eye on console output from `update_supabase_details` for per-record upsert feedback during manual syncs.
+- Comprehensive logging is available throughout the sync process:
+  - API requests and responses are logged with success/failure details
+  - AppFolio API calls show records fetched and any connection issues
+  - Supabase operations log each record upsert with individual error tracking
+  - Final sync statistics show success, failed, and total counts
+  - Job runner emits structured JSON logs for monitoring systems
 
 ## Development Guidelines
 - Follow standard Python style (PEP 8) with 4-space indents and grouped imports; use snake_case for functions and UpperCamelCase for classes.

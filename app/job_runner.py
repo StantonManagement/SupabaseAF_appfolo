@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import logging
 import os
 import sys
 import time
@@ -27,6 +28,9 @@ from uuid import uuid4
 
 from app.services.sync import sync_details
 from app.helpers.constants import DETAILS
+
+# Create logger for this module
+logger = logging.getLogger(__name__)
 
 
 def _log(payload: dict) -> None:
@@ -42,7 +46,8 @@ def run_dataset(dataset: str, run_id: str) -> int:
     start = time.time()
     try:
         results = sync_details(dataset)
-        count = len(results) if isinstance(results, list) else 0
+        # sync_details now returns {"success": int, "failed": int, "total": int}
+        count = results.get("total", 0) if isinstance(results, dict) else 0
         _log(
             {
                 "event": "sync_complete",
@@ -50,6 +55,8 @@ def run_dataset(dataset: str, run_id: str) -> int:
                 "run_id": run_id,
                 "status": "success",
                 "count": count,
+                "success": results.get("success", 0),
+                "failed": results.get("failed", 0),
                 "duration_ms": int((time.time() - start) * 1000),
             }
         )
@@ -89,6 +96,10 @@ def main(argv: List[str] | None = None) -> int:
 
     if not datasets_arg:
         valid = ", ".join(sorted(DETAILS.keys()))
+        logger.error(
+            "No dataset provided. Use --dataset <name> or set JOB_DATASET.\n"
+            f"Valid options: {valid}"
+        )
         print(
             "Error: no dataset provided. Use --dataset <name> or set JOB_DATASET.\n"
             f"Valid options: {valid}",
@@ -99,6 +110,7 @@ def main(argv: List[str] | None = None) -> int:
     datasets = [d.strip() for d in datasets_arg.split(",") if d.strip()]
     invalid = [d for d in datasets if d not in DETAILS]
     if invalid:
+        logger.error(f"Invalid dataset(s): {', '.join(invalid)}")
         print(
             f"Error: invalid dataset(s): {', '.join(invalid)}",
             file=sys.stderr,
