@@ -21,15 +21,70 @@ headers = {
 
 
 def get_appfolio_details(dataset: str):
-    print("THIS IS THE DATA FROM APPFOLIO")
+    print("FETCHING DATA FROM APPFOLIO API")
 
-    if dataset in v1_dataset:
-        response = requests.get(f"{V1_BASE_URL}/{dataset}", headers=headers, timeout=30)
-    else:
-        response = requests.post(
-            f"{V2_BASE_URL}/{dataset}", headers=headers, timeout=30
+    # Validate required environment variables
+    if not all([CLIENT_ID, CLIENT_SECRET, V1_BASE_URL, V2_BASE_URL]):
+        raise ValueError(
+            "Missing required AppFolio API credentials in environment variables"
         )
-    response.raise_for_status()
 
-    data = response.json()
-    return data["results"]
+    # Validate dataset parameter
+    if not dataset or not isinstance(dataset, str):
+        raise ValueError("Dataset parameter must be a non-empty string")
+
+    try:
+        if dataset in v1_dataset:
+            response = requests.get(
+                f"{V1_BASE_URL}/{dataset}", headers=headers, timeout=30
+            )
+        else:
+            response = requests.post(
+                f"{V2_BASE_URL}/{dataset}", headers=headers, timeout=30
+            )
+
+        # Check for HTTP errors
+        response.raise_for_status()
+
+        # Validate response content
+        if (
+            response.headers.get("content-type", "")
+            .lower()
+            .startswith("application/json")
+        ):
+            data = response.json()
+
+            if "results" not in data:
+                raise ValueError(
+                    f"Invalid API response: missing 'results' field for dataset '{dataset}'"
+                )
+
+            results = data["results"]
+            if not isinstance(results, list):
+                raise ValueError(
+                    f"Invalid API response: 'results' field must be a list for dataset '{dataset}'"
+                )
+
+            print(f"SUCCESSFULLY FETCHED {len(results)} RECORDS FROM APPFOLIO")
+            return results
+        else:
+            raise ValueError(
+                f"Invalid content-type in API response: {response.headers.get('content-type')}"
+            )
+
+    except requests.exceptions.Timeout:
+        raise RuntimeError(f"AppFolio API request timed out for dataset '{dataset}'")
+    except requests.exceptions.ConnectionError:
+        raise RuntimeError(f"Failed to connect to AppFolio API for dataset '{dataset}'")
+    except requests.exceptions.HTTPError:
+        raise RuntimeError(
+            f"AppFolio API HTTP error for dataset '{dataset}': {response.status_code} - {response.text}"
+        )
+    except requests.exceptions.RequestException as e:
+        raise RuntimeError(
+            f"AppFolio API request failed for dataset '{dataset}': {str(e)}"
+        )
+    except ValueError as e:
+        raise RuntimeError(
+            f"AppFolio API validation error for dataset '{dataset}': {str(e)}"
+        )
