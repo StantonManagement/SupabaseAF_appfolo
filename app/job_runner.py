@@ -97,7 +97,7 @@ def main(argv: List[str] | None = None) -> int:
     if not datasets_arg:
         valid = ", ".join(sorted(DETAILS.keys()))
         logger.error(
-            "No dataset provided. Use --dataset <name> or set JOB_DATASET.\n"
+            "❌ No dataset provided. Use --dataset <name> or set JOB_DATASET.\n"
             f"Valid options: {valid}"
         )
         print(
@@ -110,7 +110,7 @@ def main(argv: List[str] | None = None) -> int:
     datasets = [d.strip() for d in datasets_arg.split(",") if d.strip()]
     invalid = [d for d in datasets if d not in DETAILS]
     if invalid:
-        logger.error(f"Invalid dataset(s): {', '.join(invalid)}")
+        logger.error(f"❌ Invalid dataset(s): {', '.join(invalid)}")
         print(
             f"Error: invalid dataset(s): {', '.join(invalid)}",
             file=sys.stderr,
