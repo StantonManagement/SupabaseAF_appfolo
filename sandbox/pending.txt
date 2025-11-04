@@ -1,5 +1,5 @@
 purchase_order
-/renewal_summary
+renewal_summary
 rent_roll
 rent_roll_commercial
 rent_roll_itemized
@@ -14,15 +14,12 @@ tenant_ledger
 
 tenant_transactions_summary
 tenant_unpaid_charges_summary
-tenant_vehicle_info
-cash_flow_12_month
+twelve_month_cash_flow
 unit_custom_fields
 unit_directory
 unit_inspection
-unit_turn_detail
-unit_vacancy_detail
 unpaid_balances_by_month
-activities_summary
+upcoming_activities
 vendor_custom_fields
 vendor_directory
 vendor_ledger
