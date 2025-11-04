@@ -29,18 +29,41 @@ DETAILS = {
     "unit_turn_detail": "AF_UnitTurnDetail",
     "work_order": "AF_WorkOrder",
     "work_order_labor_summary": "AF_WorkOrderLaborSummary",
-    # ! not found in v2
-    # "aged_receivable_detail": "AF_AgedReceivableDetail",
-    # "portfolios": "AF_Portfolios",
-    # "leases": "AF_Leases",
-    # "charge_detail": "AF_ChargeDetail",
-    # "chart_of_accounts": "AF_ChartOfAccounts",
-    # "deposit_register": "AF_DepositRegister",
-    # "general_ledger": "AF_GeneralLedger",
-    # "owner_directory": "AF_OwnerDirectory",
-    # "receivables_activity": "AF_ReceivablesActivity",
-    # "trust_account_balance": "AF_TrustAccountBalance",
-    # "vendor_directory": "AF_VendorDirectory",
+    # ! NEW
+    "delinquency_as_of": "AF_DelinquencyAsOf",
+    "eligible_debt_summary": "AF_EligibleDebtSummary",
+    "email_delivery_errors": "AF_EmailDeliveryErrors",
+    "fixed_assets": "AF_FixedAssets",
+    "inspection_detail": "AF_InspectionDetail",
+    "late_fee_policy_comparison": "AF_LateFeePolicyComparison",
+    "occupancy_custom_fields": "AF_OccupancyCustomFields",
+    "occupancy_summary": "AF_OccupancySummary",
+    "owner_custom_fields": "AF_OwnerCustomFields",
+    "project_directory": "AF_ProjectDirectory",
+    "property_custom_fields": "AF_PropertyCustomFields",
+    "prospect_source_tracking": "AF_ProspectSourceTracking",
+    # ! CANNOT GET DATA FROM THE FF:
+    # payment_plans
+    # premium_listing_billing_detail
+    # project_budget_detail
+    # property_budget
+    # property_staff_assignments
+    # amenities_by_property
+    # additional_fees
+    # annual_budget_comparative
+    # annual_budget_forecast
+    # balance_sheet
+    # budget_comparative
+    # budget_property_comparison
+    # cancelled_processes
+    # cash_flow
+    # completed_workflows
+    # historical_advertised_rent
+    # in_progress_workflows
+    # income_statement_property_comparison
+    # income_statement_property_comparison
+    # inventory_usage
+    # keys_detail
 }
 
 

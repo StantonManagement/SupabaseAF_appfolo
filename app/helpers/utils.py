@@ -1,6 +1,4 @@
 import re
-
-
 def clean_record(record):
     """Convert numeric strings to proper int/float, handling commas"""
     cleaned = {}
