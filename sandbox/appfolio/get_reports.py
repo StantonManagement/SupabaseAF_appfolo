@@ -24,17 +24,17 @@ headers = {
 }
 
 reports = [
-    "occupancy_custom_fields",
-    "occupancy_summary",
-    "owner_custom_fields",
-    "payment_plans",
-    "premium_listing_billing_detail",
-    "project_budget_detail",
-    "project_directory",
-    "property_budget",
-    "property_custom_fields",
-    "property_staff_assignments",
-    "prospect_source_tracking",
+    "tenant_transactions_summary",
+    "tenant_unpaid_charges_summary",
+    "twelve_month_cash_flow",
+    "unit_custom_fields",
+    "unit_directory",
+    "unit_inspection",
+    "unpaid_balances_by_month",
+    "upcoming_activities",
+    "vendor_custom_fields",
+    "vendor_directory",
+    "vendor_ledger",
 ]
 
 for dataset in reports:

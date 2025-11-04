@@ -42,6 +42,20 @@ DETAILS = {
     "project_directory": "AF_ProjectDirectory",
     "property_custom_fields": "AF_PropertyCustomFields",
     "prospect_source_tracking": "AF_ProspectSourceTracking",
+    "premium_leads_billing_detail": "AF_PremiumLeadsBillingDetail",
+    "resident_financial_activity": "AF_ResidentFinancialActivity",
+    "security_deposit_funds_detail": "AF_SecurityDepositFundsDetail",
+    "surveys_summary": "AF_SurveysSummary",
+    "tenant_ledger": "AF_TenantLedger",
+    "unit_directory": "AF_UnitDirectory",
+    "unit_inspection": "AF_UnitInspection",
+    "unpaid_balances_by_month": "AF_UnpaidBalancesByMonth",
+    "tenant_transactions_summary": "AF_TenantTransactionsSummary",
+    "unit_custom_fields": "AF_UnitCustomFields",
+    "upcoming_activities": "AF_UpcomingActivities",
+    "vendor_custom_fields": "AF_VendorCustomFields",
+    "vendor_directory": "AF_VendorDirectory",
+    "vendor_ledger": "AF_VendorLedger",
     # ! CANNOT GET DATA FROM THE FF:
     # payment_plans
     # premium_listing_billing_detail
@@ -57,6 +71,8 @@ DETAILS = {
     # budget_property_comparison
     # cancelled_processes
     # cash_flow
+    # tenant_unpaid_charges_summary
+    # twelve_month_cash_flow
     # completed_workflows
     # historical_advertised_rent
     # in_progress_workflows
@@ -64,6 +80,10 @@ DETAILS = {
     # income_statement_property_comparison
     # inventory_usage
     # keys_detail
+    # income_statement_comparison
+    # renewal_summary
+    # showings
+    # rentable_items
 }
 
 

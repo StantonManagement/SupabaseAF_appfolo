@@ -1,15 +1,4 @@
-purchase_order
-renewal_summary
-rent_roll
-rent_roll_commercial
-rent_roll_itemized
-rentable_items
-rental_applications
-resident_financial_activity
-security_deposit_funds_detail
-showings
-survey_summary
-tenant_ledger
+
 
 
 tenant_transactions_summary
