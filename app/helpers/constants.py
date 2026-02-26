@@ -13,6 +13,7 @@ DETAILS = {
     "lease_expiration_detail": "AF_LeaseExpirationDetail",
     "lease_expiration_summary": "AF_LeaseExpirationSummary",
     # ! others
+    "buildings": "AF_Buildings",  # Uses property_group_directory data with transformation
     "property_group_directory": "AF_PropertyGroupDirectory",
     "aged_payables_summary": "AF_AgedPayablesSummary",
     "bill_detail": "AF_BillDetail",
@@ -88,3 +89,11 @@ DETAILS = {
 
 
 v1_dataset = ["aged_payables_summary", "bill_detail"]
+
+# Dataset transformations - maps dataset name to (source_report, transformation_function)
+DATASET_TRANSFORMATIONS = {
+    "buildings": {
+        "source": "property_group_directory",
+        "transform": "transform_property_to_building",
+    }
+}

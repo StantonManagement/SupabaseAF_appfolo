@@ -3,8 +3,8 @@ from supabase import create_client, Client
 import os
 
 from dotenv import load_dotenv
-from ..helpers.constants import DETAILS
-from ..helpers.utils import clean_record
+from ..helpers.constants import DETAILS, DATASET_TRANSFORMATIONS
+from ..helpers.utils import clean_record, transform_property_to_building
 
 load_dotenv()
 
@@ -48,6 +48,13 @@ def update_supabase_details(dataset: str, appfolio_results):
 
     for i, record in enumerate(appfolio_results, 1):
         try:
+            # Apply transformation if needed
+            if dataset in DATASET_TRANSFORMATIONS:
+                transform_func_name = DATASET_TRANSFORMATIONS[dataset]["transform"]
+                if transform_func_name == "transform_property_to_building":
+                    record = transform_property_to_building(record)
+                    logger.debug(f"🔄 Applied transformation for record {i}")
+
             cleaned_record = clean_record(record)
             supabase.table(DETAILS[dataset]).upsert(cleaned_record).execute()
             success_count += 1

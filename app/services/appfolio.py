@@ -4,7 +4,7 @@ import os
 import base64
 
 from dotenv import load_dotenv
-from ..helpers.constants import v1_dataset
+from ..helpers.constants import v1_dataset, DATASET_TRANSFORMATIONS
 
 load_dotenv()
 
@@ -41,14 +41,22 @@ def get_appfolio_details(dataset: str):
         logger.error(f"❌ Invalid dataset parameter: {dataset}")
         raise ValueError("Dataset parameter must be a non-empty string")
 
+    # Check if this dataset needs transformation (fetch from different source)
+    source_dataset = dataset
+    if dataset in DATASET_TRANSFORMATIONS:
+        source_dataset = DATASET_TRANSFORMATIONS[dataset]["source"]
+        logger.info(
+            f"🔄 Dataset '{dataset}' will fetch from '{source_dataset}' with transformation"
+        )
+
     try:
-        if dataset in v1_dataset:
+        if source_dataset in v1_dataset:
             response = requests.get(
-                f"{V1_BASE_URL}/{dataset}", headers=headers, timeout=30
+                f"{V1_BASE_URL}/{source_dataset}", headers=headers, timeout=30
             )
         else:
             response = requests.post(
-                f"{V2_BASE_URL}/{dataset}", headers=headers, timeout=30
+                f"{V2_BASE_URL}/{source_dataset}", headers=headers, timeout=30
             )
 
         # Check for HTTP errors
