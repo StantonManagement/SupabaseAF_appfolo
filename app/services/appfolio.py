@@ -4,7 +4,7 @@ import os
 import base64
 
 from dotenv import load_dotenv
-from ..helpers.constants import v1_dataset
+from ..helpers.constants import v1_dataset, stack_api_dataset
 
 load_dotenv()
 
@@ -42,7 +42,7 @@ def get_appfolio_details(dataset: str):
         raise ValueError("Dataset parameter must be a non-empty string")
 
     try:
-        if dataset in v1_dataset:
+        if dataset in stack_api_dataset or dataset in v1_dataset:
             response = requests.get(
                 f"{V1_BASE_URL}/{dataset}", headers=headers, timeout=30
             )

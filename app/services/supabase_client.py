@@ -3,7 +3,7 @@ from supabase import create_client, Client
 import os
 
 from dotenv import load_dotenv
-from ..helpers.constants import DETAILS
+from ..helpers.constants import DETAILS, FIELD_MAP, ON_CONFLICT
 from ..helpers.utils import clean_record
 
 load_dotenv()
@@ -49,7 +49,12 @@ def update_supabase_details(dataset: str, appfolio_results):
     for i, record in enumerate(appfolio_results, 1):
         try:
             cleaned_record = clean_record(record)
-            supabase.table(DETAILS[dataset]).upsert(cleaned_record).execute()
+            field_map = FIELD_MAP.get(dataset)
+            if field_map:
+                cleaned_record = {field_map[k]: v for k, v in cleaned_record.items() if k in field_map}
+            conflict_col = ON_CONFLICT.get(dataset)
+            query = supabase.table(DETAILS[dataset]).upsert(cleaned_record, on_conflict=conflict_col) if conflict_col else supabase.table(DETAILS[dataset]).upsert(cleaned_record)
+            query.execute()
             success_count += 1
         except Exception as e:
             logger.error(f"💥 Error upserting record {i}/{total_records}: {e}")

@@ -56,6 +56,7 @@ DETAILS = {
     "vendor_custom_fields": "AF_VendorCustomFields",
     "vendor_directory": "AF_VendorDirectory",
     "vendor_ledger": "AF_VendorLedger",
+    "property_directory": "AF_buildings",
     # ! CANNOT GET DATA FROM THE FF:
     # payment_plans
     # premium_listing_billing_detail
@@ -88,3 +89,100 @@ DETAILS = {
 
 
 v1_dataset = ["aged_payables_summary", "bill_detail"]
+
+# Stack API (v1) endpoints
+stack_api_dataset = []
+
+# Per-dataset upsert conflict column (defaults to primary key if not set)
+ON_CONFLICT = {
+    "property_directory": "id",
+}
+
+# Per-dataset field mapping: API snake_case key → exact table column name.
+# Only fields listed here are sent to Supabase; everything else is dropped.
+# Use this when a table uses quoted PascalCase column names that don't match the API.
+FIELD_MAP = {
+    "property_directory": {
+        # PascalCase columns (existing table schema)
+        "property":               "Property",
+        "property_name":          "PropertyName",
+        "property_id":            "PropertyId",
+        "property_integration_id":"id",
+        "property_address":       "PropertyAddress",
+        "property_street":        "PropertyStreet1",
+        "property_street2":       "PropertyStreet2",
+        "property_city":          "PropertyCity",
+        "property_state":         "PropertyState",
+        "property_zip":           "PropertyZip",
+        "property_county":        "PropertyCounty",
+        "market_rent":            "MarketRent",
+        "units":                  "Units",
+        "sqft":                   "SqFt",
+        "management_flat_fee":    "ManagementFlatFee",
+        "management_fee_percent": "ManagementFeePercent",
+        "minimum_fee":            "MinimumFee",
+        "maximum_fee":            "MaximumFee",
+        "description":            "Description",
+        "portfolio_id":           "PortfolioId",
+        "property_group_id":      "PropertyGroupId",
+        "property_type":          "PropertyType",
+        "property_created_on":    "PropertyCreatedOn",
+        "property_created_by":    "PropertyCreatedBy",
+        "year_built":             "YearBuilt",
+        "amenities":              "Amenities",
+        # snake_case columns (newly added)
+        "waive_fees_when_vacant":                   "waive_fees_when_vacant",
+        "reserve":                                  "reserve",
+        "home_warranty_expiration":                 "home_warranty_expiration",
+        "insurance_expiration":                     "insurance_expiration",
+        "tax_year_end":                             "tax_year_end",
+        "tax_authority":                            "tax_authority",
+        "owners_phone_number":                      "owners_phone_number",
+        "payer_name":                               "payer_name",
+        "premium_leads_status":                     "premium_leads_status",
+        "premium_leads_monthly_cap":                "premium_leads_monthly_cap",
+        "premium_leads_activation_date":            "premium_leads_activation_date",
+        "owner_i_ds":                               "owner_i_ds",
+        "portfolio_uuid":                           "portfolio_uuid",
+        "visibility":                               "visibility",
+        "maintenance_limit":                        "maintenance_limit",
+        "maintenance_notes":                        "maintenance_notes",
+        "site_manager_name":                        "site_manager_name",
+        "site_manager_phone_number":                "site_manager_phone_number",
+        "management_fee_type":                      "management_fee_type",
+        "lease_fee_type":                           "lease_fee_type",
+        "lease_flat_fee":                           "lease_flat_fee",
+        "lease_fee_percent":                        "lease_fee_percent",
+        "renewal_fee_type":                         "renewal_fee_type",
+        "renewal_flat_fee":                         "renewal_flat_fee",
+        "renewal_fee_percent":                      "renewal_fee_percent",
+        "future_management_fee_start_date":         "future_management_fee_start_date",
+        "future_management_fee_percent":            "future_management_fee_percent",
+        "future_management_flat_fee":               "future_management_flat_fee",
+        "future_minimum_fee":                       "future_minimum_fee",
+        "future_maximum_fee":                       "future_maximum_fee",
+        "future_management_fee_type":               "future_management_fee_type",
+        "future_waive_fees_when_vacant":            "future_waive_fees_when_vacant",
+        "owner_payment_type":                       "owner_payment_type",
+        "owners":                                   "owners",
+        "accounting_basis":                         "accounting_basis",
+        "prepayment_type":                          "prepayment_type",
+        "late_fee_type":                            "late_fee_type",
+        "late_fee_base_amount":                     "late_fee_base_amount",
+        "late_fee_daily_amount":                    "late_fee_daily_amount",
+        "late_fee_grace_period":                    "late_fee_grace_period",
+        "late_fee_grace_period_fixed_day":          "late_fee_grace_period_fixed_day",
+        "late_fee_grace_balance":                   "late_fee_grace_balance",
+        "max_daily_late_fees_amount":               "max_daily_late_fees_amount",
+        "ignore_partial_payments":                  "ignore_partial_payments",
+        "contract_expirations":                     "contract_expirations",
+        "management_start_date":                    "management_start_date",
+        "management_end_date":                      "management_end_date",
+        "management_end_reason":                    "management_end_reason",
+        "agent_of_record":                          "agent_of_record",
+        "tax_region_code":                          "tax_region_code",
+        "property_class":                           "property_class",
+        "online_maintenance_request_instructions":  "online_maintenance_request_instructions",
+        "listing_type":                             "listing_type",
+    },
+}
