@@ -93,6 +93,14 @@ v1_dataset = ["aged_payables_summary", "bill_detail"]
 # Stack API (v1) endpoints
 stack_api_dataset = []
 
+# Datasets with no unique business key — truncate table before each sync
+TRUNCATE_BEFORE_SYNC = [
+    "upcoming_activities",
+    "resident_financial_activity",
+    "premium_leads_billing_detail",
+    "prospect_source_tracking",
+]
+
 # Per-dataset upsert conflict column (defaults to primary key if not set)
 ON_CONFLICT = {
     "property_directory":              "id",
@@ -109,6 +117,7 @@ ON_CONFLICT = {
     "unpaid_balances_by_month":        "occupancy_id",
     "tenant_transactions_summary":     "occupancy_id",
     "vendor_ledger":                   "txn_id",
+    "tenant_ledger":                   "date,payer,description,debit,credit",
 }
 
 # Per-dataset field mapping: API snake_case key → exact table column name.

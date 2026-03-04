@@ -3,7 +3,7 @@ from supabase import create_client, Client
 import os
 
 from dotenv import load_dotenv
-from ..helpers.constants import DETAILS, FIELD_MAP, ON_CONFLICT
+from ..helpers.constants import DETAILS, FIELD_MAP, ON_CONFLICT, TRUNCATE_BEFORE_SYNC
 from ..helpers.utils import clean_record
 
 load_dotenv()
@@ -41,6 +41,10 @@ def update_supabase_details(dataset: str, appfolio_results):
     if not DETAILS[dataset]:
         logger.error(f"📁 No Supabase table mapping found for dataset '{dataset}'")
         raise ValueError(f"No Supabase table mapping found for dataset '{dataset}'")
+
+    if dataset in TRUNCATE_BEFORE_SYNC:
+        logger.info(f"🗑️ TRUNCATING TABLE '{DETAILS[dataset]}' BEFORE SYNC")
+        supabase.rpc("truncate_af_table", {"p_table_name": DETAILS[dataset]}).execute()
 
     logger.info(
         f"🚀 STARTING SYNC FOR DATASET '{dataset}' - TOTAL RECORDS TO PROCESS: {total_records}"
