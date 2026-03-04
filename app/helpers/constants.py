@@ -56,6 +56,7 @@ DETAILS = {
     "vendor_custom_fields": "AF_VendorCustomFields",
     "vendor_directory": "AF_VendorDirectory",
     "vendor_ledger": "AF_VendorLedger",
+    "chart_of_accounts": "AF_ChartOfAccounts",
     "property_directory": "AF_buildings",
     # ! CANNOT GET DATA FROM THE FF:
     # payment_plans
@@ -118,6 +119,7 @@ ON_CONFLICT = {
     "tenant_transactions_summary":     "occupancy_id",
     "vendor_ledger":                   "txn_id",
     "tenant_ledger":                   "date,payer,description,debit,credit",
+    "chart_of_accounts":               "gl_account_id",
 }
 
 # Per-dataset field mapping: API snake_case key → exact table column name.
