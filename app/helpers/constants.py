@@ -95,7 +95,20 @@ stack_api_dataset = []
 
 # Per-dataset upsert conflict column (defaults to primary key if not set)
 ON_CONFLICT = {
-    "property_directory": "id",
+    "property_directory":              "id",
+    "unit_vacancy":                    "unit_id",
+    "unit_turn_detail":                "unit_turn_id",
+    "unit_directory":                  "unit_id",
+    "unit_inspection":                 "unit_id",
+    "unit_custom_fields":              "unit_id",
+    # NEW tables
+    "surveys_summary":                 "survey_id",
+    "vendor_directory":                "vendor_id",
+    "vendor_custom_fields":            "vendor_id",
+    "security_deposit_funds_detail":   "occupancy_id",
+    "unpaid_balances_by_month":        "occupancy_id",
+    "tenant_transactions_summary":     "occupancy_id",
+    "vendor_ledger":                   "txn_id",
 }
 
 # Per-dataset field mapping: API snake_case key → exact table column name.
