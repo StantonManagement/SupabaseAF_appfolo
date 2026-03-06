@@ -24,8 +24,11 @@ headers = {
 }
 
 
-def get_appfolio_details(dataset: str):
-    logger.info("🌐 FETCHING DATA FROM APPFOLIO API")
+def get_appfolio_details(dataset: str, last_synced_at: str = None):
+    if last_synced_at:
+        logger.info(f"🌐 FETCHING DATA FROM APPFOLIO API (DELTA SYNC since {last_synced_at})")
+    else:
+        logger.info("🌐 FETCHING DATA FROM APPFOLIO API (FULL SYNC)")
 
     # Validate required environment variables
     if not all([CLIENT_ID, CLIENT_SECRET, V1_BASE_URL, V2_BASE_URL]):
@@ -55,8 +58,19 @@ def get_appfolio_details(dataset: str):
                 f"{V1_BASE_URL}/{source_dataset}", headers=headers, timeout=30
             )
         else:
+            # Build request body for Reports API v2
+            request_body = {}
+
+            # Add date filter if provided (for delta sync)
+            if last_synced_at:
+                request_body["updated_at_from"] = last_synced_at
+                logger.info(f"📅 Applying date filter: updated_at_from={last_synced_at}")
+
             response = requests.post(
-                f"{V2_BASE_URL}/{source_dataset}", headers=headers, timeout=30
+                f"{V2_BASE_URL}/{source_dataset}",
+                headers=headers,
+                json=request_body if request_body else None,
+                timeout=30
             )
 
         # Check for HTTP errors

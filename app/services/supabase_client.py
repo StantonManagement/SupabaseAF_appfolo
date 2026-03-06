@@ -22,6 +22,43 @@ if not url or not key:
 supabase: Client = create_client(url, key)
 
 
+def get_last_sync_time(dataset: str):
+    """
+    Get the last successful sync timestamp for a dataset.
+    Returns ISO format timestamp string or None if never synced.
+    """
+    try:
+        result = supabase.rpc("get_last_sync_time", {"p_endpoint": dataset}).execute()
+
+        if result.data:
+            logger.info(f"📅 Last sync for '{dataset}': {result.data}")
+            return result.data
+        else:
+            logger.info(f"📅 No previous sync found for '{dataset}'")
+            return None
+    except Exception as e:
+        logger.warning(f"⚠️ Could not get last sync time for '{dataset}': {e}")
+        return None
+
+
+def update_sync_state(dataset: str, row_count: int, status: str = "success"):
+    """
+    Update the sync state after a sync operation.
+    """
+    try:
+        supabase.rpc(
+            "update_sync_state",
+            {
+                "p_endpoint": dataset,
+                "p_row_count": row_count,
+                "p_status": status
+            }
+        ).execute()
+        logger.info(f"✅ Updated sync state for '{dataset}': {row_count} rows, status={status}")
+    except Exception as e:
+        logger.error(f"❌ Failed to update sync state for '{dataset}': {e}")
+
+
 def update_supabase_details(dataset: str, appfolio_results):
     success_count = 0
     failed_count = 0
@@ -69,5 +106,9 @@ def update_supabase_details(dataset: str, appfolio_results):
     logger.info(f"  - ✅ Success: {success_count}")
     logger.info(f"  - ❌ Failed: {failed_count}")
     logger.info(f"  - 📊 Total: {total_records}")
+
+    # Update sync state in database
+    sync_status = "success" if failed_count == 0 else "partial"
+    update_sync_state(dataset, success_count, sync_status)
 
     return {"success": success_count, "failed": failed_count, "total": total_records}
