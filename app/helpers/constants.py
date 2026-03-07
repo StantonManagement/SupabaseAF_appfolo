@@ -100,16 +100,53 @@ TRUNCATE_BEFORE_SYNC = [
     "resident_financial_activity",
     "premium_leads_billing_detail",
     "prospect_source_tracking",
+    # Leasing aggregates — no unique ID
+    "leasing_summary",
+    "leasing_agent_performance",
+    "leasing_funnel_performance",
+    "occupancy_summary",
+    # No reliable unique key
+    "email_delivery_errors",
+    "late_fee_policy_comparison",
+    "tenant_vehicle_info",  # PK is tenant_id but tenants can have multiple vehicles
 ]
 
 # Per-dataset upsert conflict column (defaults to primary key if not set)
 ON_CONFLICT = {
+    # Unit tables
     "property_directory":              "id",
     "unit_vacancy":                    "unit_id",
     "unit_turn_detail":                "unit_turn_id",
     "unit_directory":                  "unit_id",
     "unit_inspection":                 "unit_id",
     "unit_custom_fields":              "unit_id",
+    # Leasing
+    "rental_applications":             "rental_application_id",
+    "guest_cards":                     "guest_card_id",
+    "guest_card_inquiries":            "inquiry_id",
+    "inactive_guest_cards":            "guest_card_id",
+    "owner_leasing":                   "unit_id",
+    "lease_history":                   "lease_uuid",
+    "lease_expiration_detail":         "occupancy_id",
+    "lease_expiration_summary":        "property_id",
+    # Property
+    "property_group_directory":        "property_id",
+    # Tenant
+    "tenant_directory":                "occupancy_id",
+    "tenant_tickler":                  "occupancy_id",
+    # "tenant_vehicle_info" uses TRUNCATE_BEFORE_SYNC — PK is tenant_id but tenants can have multiple vehicles
+    "tenant_debt_collections_status":  "occupancy_id",
+    # Financial
+    "delinquency":                     "occupancy_id",
+    "delinquency_as_of":               "occupancy_id",
+    "eligible_debt_summary":           "occupancy_id",
+    "gross_potential_rent_enhanced":   "unit_id",
+    "purchase_order":                  "purchase_order_id",
+    "rent_roll":                       "occupancy_id",
+    "rent_roll_itemized":              "occupancy_id",
+    "rent_roll_commercial":            "occupancy_id,gl_account",
+    # Work orders
+    "work_order":                      "work_order_id",
     # NEW tables
     "surveys_summary":                 "survey_id",
     "vendor_directory":                "vendor_id",
@@ -120,6 +157,13 @@ ON_CONFLICT = {
     "vendor_ledger":                   "txn_id",
     "tenant_ledger":                   "date,payer,description,debit,credit",
     "chart_of_accounts":               "gl_account_id",
+    "fixed_assets":                    "asset_id",
+    "inspection_detail":               "inspection_id",
+    "occupancy_custom_fields":         "occupancy_id",
+    "occupancy_summary":               "property_id",
+    "owner_custom_fields":             "owner_id",
+    "project_directory":               "project_id",
+    "property_custom_fields":          "property_id",
 }
 
 # Per-dataset field mapping: API snake_case key → exact table column name.
