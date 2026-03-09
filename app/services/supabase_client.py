@@ -3,7 +3,7 @@ from supabase import create_client, Client
 import os
 
 from dotenv import load_dotenv
-from ..helpers.constants import DETAILS, DATASET_TRANSFORMATIONS
+from ..helpers.constants import DETAILS, DATASET_TRANSFORMATIONS, UPSERT_CONFLICT_FIELDS
 from ..helpers.utils import clean_record, transform_property_to_building
 
 load_dotenv()
@@ -93,7 +93,20 @@ def update_supabase_details(dataset: str, appfolio_results):
                     logger.debug(f"🔄 Applied transformation for record {i}")
 
             cleaned_record = clean_record(record)
-            supabase.table(DETAILS[dataset]).upsert(cleaned_record).execute()
+
+            # Get the conflict field for this dataset (for upsert)
+            conflict_field = UPSERT_CONFLICT_FIELDS.get(dataset)
+
+            if conflict_field:
+                # Upsert with explicit ON CONFLICT field
+                supabase.table(DETAILS[dataset]).upsert(
+                    cleaned_record,
+                    on_conflict=conflict_field
+                ).execute()
+            else:
+                # Fallback to default upsert (uses primary key)
+                supabase.table(DETAILS[dataset]).upsert(cleaned_record).execute()
+
             success_count += 1
         except Exception as e:
             logger.error(f"💥 Error upserting record {i}/{total_records}: {e}")
@@ -108,7 +121,8 @@ def update_supabase_details(dataset: str, appfolio_results):
     logger.info(f"  - 📊 Total: {total_records}")
 
     # Update sync state in database
-    sync_status = "success" if failed_count == 0 else "partial"
+    # Note: Database constraint only allows 'success' or 'failed', not 'partial'
+    sync_status = "success" if failed_count == 0 else "failed"
     update_sync_state(dataset, success_count, sync_status)
 
     return {"success": success_count, "failed": failed_count, "total": total_records}

@@ -97,3 +97,12 @@ DATASET_TRANSFORMATIONS = {
         "transform": "transform_property_to_building",
     }
 }
+
+# Upsert conflict fields - maps dataset to the unique field for ON CONFLICT
+UPSERT_CONFLICT_FIELDS = {
+    "work_order": "work_order_id",
+    "tenant_directory": "occupancy_id",
+    "unit_directory": "unit_id",
+    "property_group_directory": "property_id",
+    "buildings": "property_id",
+}
