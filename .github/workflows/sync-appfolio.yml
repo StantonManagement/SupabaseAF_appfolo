@@ -1,0 +1,54 @@
+name: AppFolio Sync Cron Jobs
+
+on:
+  schedule:
+    # Work orders - every 5 minutes
+    - cron: '*/5 * * * *'
+    # Tenants - hourly
+    - cron: '0 * * * *'
+    # Units - hourly
+    - cron: '0 * * * *'
+    # Properties - daily at midnight EST (5 AM UTC)
+    - cron: '0 5 * * *'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  sync-work-orders:
+    runs-on: ubuntu-latest
+    if: github.event.schedule == '*/5 * * * *' || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Sync Work Orders
+        run: |
+          curl -X POST ${{ secrets.RAILWAY_API_URL }}/sync_details \
+            -H "Content-Type: application/json" \
+            -d '{"dataset": "work_order"}'
+
+  sync-tenants:
+    runs-on: ubuntu-latest
+    if: github.event.schedule == '0 * * * *' || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Sync Tenants
+        run: |
+          curl -X POST ${{ secrets.RAILWAY_API_URL }}/sync_details \
+            -H "Content-Type: application/json" \
+            -d '{"dataset": "tenant_directory"}'
+
+  sync-units:
+    runs-on: ubuntu-latest
+    if: github.event.schedule == '0 * * * *' || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Sync Units
+        run: |
+          curl -X POST ${{ secrets.RAILWAY_API_URL }}/sync_details \
+            -H "Content-Type: application/json" \
+            -d '{"dataset": "unit_directory"}'
+
+  sync-properties:
+    runs-on: ubuntu-latest
+    if: github.event.schedule == '0 5 * * *' || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Sync Properties
+        run: |
+          curl -X POST ${{ secrets.RAILWAY_API_URL }}/sync_details \
+            -H "Content-Type: application/json" \
+            -d '{"dataset": "property_group_directory"}'
